@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             menu.addItem(m)
             for item in data.items {
                 let m = NSMenuItem()
-                m.title = "\(item.0)  \(item.1)"
+                m.title = "\(item.1): \(item.0)"
                 menu.addItem(m)
             }
             menu.addItem(NSMenuItem.separator())
@@ -74,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             for temp in temps {
                 items.append((temp.name, "\(try SMCKit.temperature(temp.code)) °C"))
             }
-            items = items.sorted(by: {$0.0 < $1.0})
+            items = items.sorted(by: {$0.1 > $1.1})
             result.append(SensorsData(title: "Temperature", items: items))
         } catch {
             // pass
