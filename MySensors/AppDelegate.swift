@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             menu.addItem(m)
             for item in data.items {
                 let m = NSMenuItem()
-                m.title = "\(item.1): \(item.0)"
+                m.title = "\(item.0): \(item.1)"
                 menu.addItem(m)
             }
             menu.addItem(NSMenuItem.separator())
@@ -72,9 +72,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             var items: Array<(String, String)> = []
 
             for temp in temps {
-                items.append((temp.name, "\(try SMCKit.temperature(temp.code)) °C"))
+				items.append(("\(try SMCKit.temperature(temp.code)) °C", temp.name))
             }
-            items = items.sorted(by: {$0.1 > $1.1})
+            items = items.sorted(by: {$0.0 > $1.0})
             result.append(SensorsData(title: "Temperature", items: items))
         } catch {
             // pass
@@ -84,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let fans = try SMCKit.allFans()
             var items: Array<(String, String)> = []
             for fan in fans {
-                items.append((fan.name, String(try SMCKit.fanCurrentSpeed(fan.id))))
+                items.append((fan.name, "\(try SMCKit.fanCurrentSpeed(fan.id)) rpm"))
             }
             result.append(SensorsData(title: "Fan Speed", items: items))
         } catch {
