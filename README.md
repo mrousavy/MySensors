@@ -2,9 +2,26 @@
 
 > mrousavy fork
 
-Minimal application which shows macOS's chip tempratures and fan speeds on menu bar.
+Minimal application which shows macOS's chip tempratures and fan speeds on menu bar without background tasks. Values only get once read when the menu gets opened.
 
-![Demo Screenshot in MacOS Catalina](./demo.png)
+<table>
+  <tr>
+    <td>
+      <img src="./demo_light.png" alt="Demo Screenshot in MacOS Catalina" />
+    </td>
+    <td>
+      <img src="./demo_dark.png" alt="Demo Screenshot in MacOS Catalina using Dark Mode" />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center">Light mode</p>
+    </td>
+    <td>
+      <p align="center">Dark mode</p>
+    </td>
+  </tr>
+</table>
 
 ## Build
 
