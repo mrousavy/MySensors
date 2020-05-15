@@ -6,8 +6,6 @@
 //
 // Copyright (C) 2014-2017  beltex <https://beltex.github.io>
 //
-// Updated to work with T2 MacBooks using code from
-// https://github.com/beltex/SMCKit/pull/39/commits/af7620ecf27a6920f475ce98fe3ce4a32e825cc2
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +24,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+// Updated to work with T2 MacBooks using code from
+// https://github.com/beltex/SMCKit/pull/39/commits/af7620ecf27a6920f475ce98fe3ce4a32e825cc2
 
 import IOKit
 import Foundation
@@ -82,7 +83,7 @@ public extension Int {
     init(fromFPE2 bytes: FPE2) {
         self = (Int(bytes.0) << 6) + (Int(bytes.1) >> 2)
     }
-    
+
     init(fromFLT bytes: FLT) {
         // convert the SMCBytes to a float value
         let byteArray: Array<UInt8> = [bytes.0, bytes.1, bytes.2, bytes.3]
@@ -103,7 +104,7 @@ extension Double {
         let sign = bytes.0 & 0x80 == 0 ? 1.0 : -1.0
         self = sign * Double(bytes.0 & 0x7F)    // AND to mask sign bit
     }
-    
+
     init(fromFLT bytes: FLT) {
         // convert the SMCBytes to a float value
         let byteArray: Array<UInt8> = [bytes.0, bytes.1, bytes.2, bytes.3]

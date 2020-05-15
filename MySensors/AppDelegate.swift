@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             alert.runModal()
             NSApplication.shared.terminate(self)
         }
-        
+
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         let icon = NSImage(named: "ic_memory")
         icon?.isTemplate = true
@@ -35,37 +35,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         let _ = SMCKit.close()
     }
-    
+
     @objc func onQuitMenuItemClicked(_ sender: NSMenuItem) {
         NSApplication.shared.terminate(self)
     }
-    
+
     func menuWillOpen(_ menu: NSMenu) {
         let sensorsData = getSensorsData()
 
-		let myStyle = NSMutableParagraphStyle()
-		let labelWidth =  CGFloat(250)
-		myStyle.tabStops = [NSTextTab(textAlignment: .left, location: 0.0, options: [:]),
-		  NSTextTab(textAlignment: .right, location: labelWidth, options: [:])]
-		let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-		paragraphStyle.alignment = NSTextAlignment.right
-		
+        let myStyle = NSMutableParagraphStyle()
+        let labelWidth =  CGFloat(250)
+        myStyle.tabStops = [NSTextTab(textAlignment: .left, location: 0.0, options: [:]),
+          NSTextTab(textAlignment: .right, location: labelWidth, options: [:])]
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.right
+
         for data in sensorsData {
             if data.items.count == 0 {
                 continue
             }
             let m = NSMenuItem()
             m.title = "\(data.title):"
-			menu.addItem(m)
+            menu.addItem(m)
             for item in data.items {
                 let m = NSMenuItem()
-				
-				let content = "\(item.0)\t\(item.1)"
-				let attributedString = NSMutableAttributedString(string: content)
-				attributedString.addAttribute(.paragraphStyle, value: myStyle, range: NSRange(location: 0, length: content.count-1))
 
-				
-				m.attributedTitle = attributedString
+                let content = "\(item.0)\t\(item.1)"
+                let attributedString = NSMutableAttributedString(string: content)
+                attributedString.addAttribute(.paragraphStyle, value: myStyle, range: NSRange(location: 0, length: content.count-1))
+
+
+                m.attributedTitle = attributedString
                 menu.addItem(m)
             }
             menu.addItem(NSMenuItem.separator())
@@ -76,17 +76,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         m.action = #selector(onQuitMenuItemClicked)
         menu.addItem(m)
     }
-    
+
     func getSensorsData() -> Array<SensorsData> {
         var result: Array<SensorsData> = []
 
-        
+
         do {
             let temps = try SMCKit.allKnownTemperatureSensors()
             var items: Array<(String, String)> = []
 
             for temp in temps {
-				items.append((temp.name, "\(try SMCKit.temperature(temp.code)) °C"))
+                items.append((temp.name, "\(try SMCKit.temperature(temp.code)) °C"))
             }
             items = items.sorted(by: {$0.1 > $1.1})
             result.append(SensorsData(title: "Temperature", items: items))
@@ -107,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         return result
     }
-    
+
     func menuDidClose(_ menu: NSMenu) {
         menu.removeAllItems()
     }
